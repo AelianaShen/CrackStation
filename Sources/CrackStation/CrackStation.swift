@@ -16,4 +16,14 @@ public struct CrackStation {
             return [:]
         }
     }
+    public static func crack(password: String) throws -> (String) {
+        let lookupTable = try CrackStation.loadDictionaryFromDisk()
+        let lookupIndex = lookupTable.firstIndex(where: {$0.value.contains(password)})
+        //then
+        if let index = lookupIndex {
+            return lookupTable[index].key
+        }else{
+            return "SHA1 Not Found"
+        }
+    }
 }

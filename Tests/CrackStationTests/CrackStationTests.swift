@@ -42,4 +42,16 @@ final class CrackStationTests: XCTestCase {
         //then
         XCTAssertNil(ans)
     }
+    func testCrack0() throws {
+        //when
+        let ans = try CrackStation.crack(password: "b6589fc6ab0dc82cf12099d1c2d40ab994e8410c")
+        //then
+        XCTAssertEqual(ans,"0")
+    }
+    func testCrackNotFound() throws {
+        //when
+        let ans = try CrackStation.crack(password: "")
+        //then
+        XCTAssertEqual(ans,"SHA1 Not Found")
+    }
 }
