@@ -11,4 +11,24 @@ final class CrackStationTests: XCTestCase {
         let ans = encryptUsingSha1(from: "7")
         XCTAssertEqual(String(ans), "SHA1 digest: 902ba3cda1883801594b6e1b452790cc53948fda")
     }
+    func testLoadingLookupTable() throws {
+        //when
+        let lookupTable = try CrackStation.loadDictionaryFromDisk()
+        //then
+        XCTAssertNotNil(lookupTable)
+    }
+    func testLookup_a() throws {
+        //when
+        let lookupTable = try CrackStation.loadDictionaryFromDisk()
+        let ans = lookupTable["a"]
+        //then
+        XCTAssertEqual(ans,"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
+    }
+    func testHashNotFound() throws {
+        //when
+        let lookupTable = try CrackStation.loadDictionaryFromDisk()
+        let ans = lookupTable["_"]
+        //then
+        XCTAssertNil(ans)
+    }
 }
