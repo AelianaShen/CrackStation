@@ -6,7 +6,8 @@ The latest update is POC v1.
 ### A. What's here for?
 In the POC v1 version, I aim to crack any single-character password, which fits the regular expression [A-Za-z0-9].
 
-Test cases:
+| Test cases | Description |
+| --- | --- |
 | testSha1_a() | Able to turn a to SHA1 code |
 | testSha1_7() | Able to turn 7 to SHA1 code |
 | testLoadingLookupTable() | Able to load lookup table |
