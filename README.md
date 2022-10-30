@@ -42,13 +42,13 @@ If you want to use crack function:
 
     let ans = try CrackStation.crack(password: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
     ans is the key which match the given SHA1
-    else return "SHA1 Not Found")
+    else return "nil")
 
 If you want to use decrypt function:
 
     let ans = decrypt(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
     ans is the key which match the given SHA1
-    else return "SHA1 Not Found")
+    else return "nil")
 
 ### C.Version
 The latest stable version is 1.0.0
