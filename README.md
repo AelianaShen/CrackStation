@@ -1,10 +1,11 @@
 # CrackStation
 
 This package demo the cracking method of plain-text passwords.
-The latest update is POC v1.
+The latest update is POC v2 (version 1.0.0).
 
 ### A. What's here for?
-In the POC v1 version, I aim to crack any single-character password, which fits the regular expression [A-Za-z0-9].
+In the POC v2 version, I aim to crack any two-character password, which fits the regular expression [A-Za-z0-9]{1,2}.
+People can use this package to understand how programs can decrypt passwords.
 
 | Test cases | Description |
 | --- | --- |
@@ -42,3 +43,15 @@ If you want to use crack function:
     let ans = try CrackStation.crack(password: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
     ans is the key which match the given SHA1
     else return "SHA1 Not Found")
+
+If you want to use decrypt function:
+
+    let ans = decrypt(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
+    ans is the key which match the given SHA1
+    else return "SHA1 Not Found")
+
+### C.Version
+The latest stable version is 1.0.0
+
+### D.Author
+This package is build by Aeliana (Po-Hsuan) Shen.

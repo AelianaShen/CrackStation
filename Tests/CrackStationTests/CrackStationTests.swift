@@ -20,20 +20,21 @@ final class CrackStationTests: XCTestCase {
     func testLookup_a() throws {
         //when
         let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        let ans = lookupTable["a"]
+        let lookupIndex = lookupTable.firstIndex(where: {$0.value.elementsEqual("a")})
         //then
-        XCTAssertEqual(ans,"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
+        if let index = lookupIndex {
+            XCTAssertEqual(lookupTable[index].key,"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
+        }else{
+            XCTAssert(false)
+        }
     }
     func testLookup_86f7e() throws {
         //when
         let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        let lookupIndex = lookupTable.firstIndex(where: {$0.value.contains("86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")})
+        let ans = lookupTable["86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"]
         //then
-        if let index = lookupIndex {
-            XCTAssertEqual(lookupTable[index].key,"a")
-        }else{
-            XCTAssert(false)
-        }
+        XCTAssertEqual(ans,"a")
+        
     }
     func testHashNotFound() throws {
         //when

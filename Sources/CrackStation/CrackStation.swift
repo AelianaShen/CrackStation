@@ -1,9 +1,15 @@
 import Foundation
-public struct CrackStation {
+public struct CrackStation : Decrypter {
     public private(set) var text = "Hello, World!"
 
     public init() {
     }
+    
+    public func decrypt(shaHash: String) -> String? {
+        let ans = try? CrackStation.crack(password: shaHash)
+        return ans
+    }
+    
     static func loadDictionaryFromDisk() throws -> [String : String] {
         guard let path = Bundle.module.url(forResource: "data", withExtension: "json") else { return [:] }
         
@@ -18,12 +24,7 @@ public struct CrackStation {
     }
     public static func crack(password: String) throws -> (String) {
         let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        let lookupIndex = lookupTable.firstIndex(where: {$0.value.contains(password)})
-        //then
-        if let index = lookupIndex {
-            return lookupTable[index].key
-        }else{
-            return "SHA1 Not Found"
-        }
+        guard let ans = lookupTable[password] else { return "SHA1 Not Found" }
+        return ans
     }
 }
