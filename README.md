@@ -50,8 +50,8 @@ If you want to use decrypt function:
     ans is the key which match the given SHA1
     else return "nil")
 
-### C.Version
+### C. Version
 The latest stable version is 1.0.0
 
-### D.Author
+### D. Author
 This package is build by Aeliana (Po-Hsuan) Shen.
