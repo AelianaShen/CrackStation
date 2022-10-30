@@ -7,7 +7,11 @@ public struct CrackStation : Decrypter {
     
     public func decrypt(shaHash: String) -> String? {
         let ans = try? CrackStation.crack(password: shaHash)
-        return ans
+        if ans == "SHA1 Not Found" {
+            return nil
+        }else{
+            return ans
+        }
     }
     
     static func loadDictionaryFromDisk() throws -> [String : String] {
