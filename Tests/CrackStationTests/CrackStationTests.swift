@@ -53,6 +53,6 @@ final class CrackStationTests: XCTestCase {
         //when
         let ans = try CrackStation.crack(password: "")
         //then
-        XCTAssertEqual(ans,"nil")
+        XCTAssertEqual(ans,nil)
     }
 }

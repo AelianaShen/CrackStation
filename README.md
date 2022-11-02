@@ -16,7 +16,7 @@ People can use this package to understand how programs can decrypt passwords.
 | testLookup_86f7e() | Able to find a by given a's SHA1 |
 | testHashNotFound() | When not found, return nil |
 | testCrack0 | Able to find 0's SHA1 from crack()|
-| testCrackNotFound() | When crack() did not find any matches, return "SHA1 Not Found" |
+| testCrackNotFound() | When crack() did not find any matches, return nil |
 
 ### B. How to use it?
 I have two encrypt function, encryptUsingSha1 and encryptUsingSha2 in Sources > CrackStation > EncrptLib. These function as a practice of encryption a string. They are available on macOS 10.15 or higher version. If you want to call them, example as below:

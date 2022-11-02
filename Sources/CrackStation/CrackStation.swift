@@ -22,9 +22,9 @@ public struct CrackStation : Decrypter {
             return [:]
         }
     }
-    public static func crack(password: String) throws -> (String) {
+    public static func crack(password: String) throws -> String? {
         let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        guard let ans = lookupTable[password] else { return "nil" }
+        guard let ans = lookupTable[password] else { return nil }
         return ans
     }
 }
