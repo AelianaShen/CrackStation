@@ -30,28 +30,26 @@ final class CrackStationTests: XCTestCase {
     }
     func testLookup_86f7e() throws {
         //when
-        let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        let ans = lookupTable["86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"]
+        let ans = CrackStation().lookupTable["86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"]
         //then
         XCTAssertEqual(ans,"a")
         
     }
     func testHashNotFound() throws {
         //when
-        let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        let ans = lookupTable["_"]
+        let ans = CrackStation().lookupTable["_"]
         //then
         XCTAssertNil(ans)
     }
     func testCrack0() throws {
         //when
-        let ans = try CrackStation.crack(password: "b6589fc6ab0dc82cf12099d1c2d40ab994e8410c")
+        let ans = try CrackStation.crack(shaHash: "b6589fc6ab0dc82cf12099d1c2d40ab994e8410c")
         //then
         XCTAssertEqual(ans,"0")
     }
     func testCrackNotFound() throws {
         //when
-        let ans = try CrackStation.crack(password: "")
+        let ans = try CrackStation.crack(shaHash: "")
         //then
         XCTAssertEqual(ans,nil)
     }

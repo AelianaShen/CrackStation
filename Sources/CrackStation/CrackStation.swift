@@ -1,17 +1,27 @@
 import Foundation
+
+enum Errors : Error {
+    case pathNotFound
+    case loadLookupTableFail
+}
+
 public struct CrackStation : Decrypter {
-    public private(set) var text = "Hello, World!"
+    var lookupTable = [String:String]()
 
     public init() {
-    }
-    
-    public func decrypt(shaHash: String) -> String? {
-        let ans = try? CrackStation.crack(password: shaHash)
-        return ans
+        do{
+            self.lookupTable = try CrackStation.loadDictionaryFromDisk()
+        } catch Errors.pathNotFound {
+            print("Can't find data.json")
+        } catch Errors.loadLookupTableFail {
+            print("Load data fail")
+        } catch {
+            print("Unexpected error: \(error).")
+        }
     }
     
     static func loadDictionaryFromDisk() throws -> [String : String] {
-        guard let path = Bundle.module.url(forResource: "data", withExtension: "json") else { return [:] }
+        guard let path = Bundle.module.url(forResource: "data", withExtension: "json") else { throw Errors.pathNotFound }
         
         let data = try Data(contentsOf: path)
         let jsonResult = try JSONSerialization.jsonObject(with: data)
@@ -19,12 +29,17 @@ public struct CrackStation : Decrypter {
         if let lookupTable: Dictionary = jsonResult as? Dictionary<String, String> {
             return lookupTable
         } else {
-            return [:]
+            throw Errors.loadLookupTableFail
         }
     }
-    public static func crack(password: String) throws -> String? {
-        let lookupTable = try CrackStation.loadDictionaryFromDisk()
-        guard let ans = lookupTable[password] else { return nil }
+    
+    public func decrypt(shaHash: String) -> String? {
+        let ans = try? CrackStation.crack(shaHash: shaHash)
+        return ans
+    }
+    
+    public static func crack(shaHash: String) throws -> String? {
+        guard let ans = CrackStation().lookupTable[shaHash] else { return nil }
         return ans
     }
 }

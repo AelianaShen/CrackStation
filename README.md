@@ -27,28 +27,28 @@ I have two encrypt function, encryptUsingSha1 and encryptUsingSha2 in Sources > 
 I have a data JSON file, as a library. It allows my cracking function access to look up the correct password. If you want to access the library to look for a specific words' SHA1, example as below:
 
     let lookupTable = try CrackStation.loadDictionaryFromDisk()
-    let ans = lookupTable["a"]
-    ans is the SHA-1 code for "a" character.
+    let lookupIndex = lookupTable.firstIndex(where: {$0.value.elementsEqual("a")})
+    //then
+    if let index = lookupIndex {
+        lookupTable[index].key is the SHA-1 code for "a" character.
+    }
     
 If you want to access the library to look for a specific word by given SHA1 "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8", the example as below:
     
-    let lookupTable = try CrackStation.loadDictionaryFromDisk()
-    let lookupIndex = lookupTable.firstIndex(where: {$0.value.contains("86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")})
-    if let index = lookupIndex {
-        lookupTable[index].key is the keyword you are looking for
-    }
+    let ans = CrackStation().lookupTable["86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"]
+    ans is the keyword you are looking for
 
 If you want to use crack function:
 
-    let ans = try CrackStation.crack(password: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
+    let ans = try CrackStation.crack(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
     ans is the key which match the given SHA1
-    else return "nil")
+    else return "nil"
 
 If you want to use decrypt function:
 
     let ans = decrypt(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
     ans is the key which match the given SHA1
-    else return "nil")
+    else return "nil"
 
 ### C. Version
 The latest stable version is 1.0.0
