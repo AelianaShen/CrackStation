@@ -6,40 +6,28 @@ enum Errors : Error {
 }
 
 public struct CrackStation : Decrypter {
-    var lookupTable = [String:String]()
+    let lookupTable = loadDictionaryFromDisk()
 
-    public init() {
-        do{
-            self.lookupTable = try CrackStation.loadDictionaryFromDisk()
-        } catch Errors.pathNotFound {
-            print("Can't find data.json")
-        } catch Errors.loadLookupTableFail {
-            print("Load data fail")
-        } catch {
-            print("Unexpected error: \(error).")
-        }
-    }
+    public init() {}
     
-    static func loadDictionaryFromDisk() throws -> [String : String] {
-        guard let path = Bundle.module.url(forResource: "data", withExtension: "json") else { throw Errors.pathNotFound }
+    static func loadDictionaryFromDisk() -> [String : String] {
+        guard let path = Bundle.module.url(forResource: "data", withExtension: "json") else { return [:] }
         
-        let data = try Data(contentsOf: path)
-        let jsonResult = try JSONSerialization.jsonObject(with: data)
+        guard let data = try? Data(contentsOf: path) else { return [:] }
+        let jsonResult = try? JSONSerialization.jsonObject(with: data)
         
         if let lookupTable: Dictionary = jsonResult as? Dictionary<String, String> {
             return lookupTable
         } else {
-            throw Errors.loadLookupTableFail
+            return [:]
         }
     }
     
     public func decrypt(shaHash: String) -> String? {
-        let ans = try? CrackStation.crack(shaHash: shaHash)
-        return ans
+        return lookupTable[shaHash]
     }
     
-    public static func crack(shaHash: String) throws -> String? {
-        guard let ans = CrackStation().lookupTable[shaHash] else { return nil }
-        return ans
+    public func crack(shaHash: String) -> String? {
+        return lookupTable[shaHash]
     }
 }

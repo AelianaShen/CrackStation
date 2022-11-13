@@ -13,13 +13,13 @@ final class CrackStationTests: XCTestCase {
     }
     func testLoadingLookupTable() throws {
         //when
-        let lookupTable = try CrackStation.loadDictionaryFromDisk()
+        let lookupTable = CrackStation.loadDictionaryFromDisk()
         //then
         XCTAssertNotNil(lookupTable)
     }
     func testLookup_a() throws {
         //when
-        let lookupTable = try CrackStation.loadDictionaryFromDisk()
+        let lookupTable = CrackStation.loadDictionaryFromDisk()
         let lookupIndex = lookupTable.firstIndex(where: {$0.value.elementsEqual("a")})
         //then
         if let index = lookupIndex {
@@ -43,13 +43,13 @@ final class CrackStationTests: XCTestCase {
     }
     func testCrack0() throws {
         //when
-        let ans = try CrackStation.crack(shaHash: "b6589fc6ab0dc82cf12099d1c2d40ab994e8410c")
+        let ans = CrackStation().crack(shaHash: "b6589fc6ab0dc82cf12099d1c2d40ab994e8410c")
         //then
         XCTAssertEqual(ans,"0")
     }
     func testCrackNotFound() throws {
         //when
-        let ans = try CrackStation.crack(shaHash: "")
+        let ans = CrackStation().crack(shaHash: "")
         //then
         XCTAssertEqual(ans,nil)
     }
