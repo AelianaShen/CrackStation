@@ -1,12 +1,6 @@
 import Foundation
-
-enum Errors : Error {
-    case pathNotFound
-    case loadLookupTableFail
-}
-
 public struct CrackStation : Decrypter {
-    let lookupTable = loadDictionaryFromDisk()
+    private let lookupTable = loadDictionaryFromDisk()
 
     public init() {}
     
@@ -24,10 +18,6 @@ public struct CrackStation : Decrypter {
     }
     
     public func decrypt(shaHash: String) -> String? {
-        return lookupTable[shaHash]
-    }
-    
-    public func crack(shaHash: String) -> String? {
         return lookupTable[shaHash]
     }
 }
