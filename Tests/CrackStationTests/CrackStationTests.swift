@@ -25,18 +25,6 @@ final class CrackStationTests: XCTestCase {
         XCTAssertNotNil(lookupTable)
     }
     
-    func testLookup_sha1_a() throws {
-        //when
-        let lookupTable = CrackStation.loadDictionaryFromDisk()
-        let lookupIndex = lookupTable.firstIndex(where: {$0.value.elementsEqual("a")})
-        //then
-        if let index = lookupIndex {
-            XCTAssertEqual(lookupTable[index].key,"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
-        }else{
-            XCTAssert(false)
-        }
-    }
-    
     func testDecrypt_sha1_0() throws {
         //when
         let password = CrackStation().decrypt(shaHash: "b6589fc6ab0dc82cf12099d1c2d40ab994e8410c")

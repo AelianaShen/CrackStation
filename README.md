@@ -1,57 +1,58 @@
-# CrackStation
+# CrackStation, a Decrypter implementation
+This package demo the cracking method of unsalted plain-text passwords.
+The latest version is MVP (2.0.0)
 
-This package demo the cracking method of plain-text passwords.
-The latest update is POC v2 (version 1.1.0).
+### Overview
+The package is built by the following process:
+- In the POC v1 version, I aim to decrypt any single-character SHA-1 password, which fits the regular expression [A-Za-z0-9].
+- In the POC v2 version, I aim to decrypt any two-character SHA-1 password, which fits the regular expression [A-Za-z0-9]{1,2}.
+- In the MVP (minimal viable product) version, this package is able to decrypt any three-characters password which matches the regular expression [A-Za-z0-9?!]{1,3}. Whether using SHA-1 or SHA-256 encryption.
 
-### A. What's here for?
-In the POC v2 version, I aim to crack any two-character password, which fits the regular expression [A-Za-z0-9]{1,2}.
+### Mission Statement
 People can use this package to understand how programs can decrypt passwords.
 
+### Installation
+**Swift Package Manager**
+The [Swift Package Manager](https://www.swift.org/package-manager) is "a tool for managing the distribution of Swift code. It's integrated with the Swift build system to automate the process of downloading, compiling, and linking dependencies."
+Once you have your Swift package set up, add CrackStation to the list of dependencies in your `Package.swift` file:
+```javascript
+dependencies: [
+    .package(url: "https://github.com/AelianaShen/CrackStation.git", .upToNextMajor(from: "2.0.0"))
+]
+```
+
+### Usage
+#### The API
+This package has two public functions. Their function signatures show below:
+```js
+public func decrypt(shaHash: String) -> String?
+```
+The decrypt function is used for decrypting hashes back to plain-text passwords. Inputs a hash string and outputs either nil or a password string.
+```js
+public init()
+```
+The init function is used for creating a decrypter.
+
+#### Example
+If you want to use decrypt function to decrypt a hash code "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8", you can write:
+```js
+decrypt(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
+```
+The function returns the matched plain-text password with "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8". If the library does not find any matches, the function returns nil.
+
+### Test cases in packege
 | Test cases | Description |
 | --- | --- |
 | testSha1_a() | Able to turn a to SHA1 code |
 | testSha1_7() | Able to turn 7 to SHA1 code |
 | testLoadingLookupTable() | Able to load lookup table |
-| testLookup_a() | Able to find a's SHA1 from lookup table |
-| testLookup_86f7e() | Able to find a by given a's SHA1 |
+| testDecrypt_sha1_0() | Able to decrypt 0's SHA1 |
+| testDecrypt_sha2_9() | Able to decrypt 9's SHA2 |
+| testDecrypt_sha1_J4() | Able to decrypt J4's SHA1 |
+| testDecrypt_sha2_C0() | Able to decrypt C0's SHA2 |
+| testDecrypt_sha1_Jxs() | Able to decrypt Jxs's SHA1 |
+| testDecrypt_sha2_Jxs() | Able to decrypt Jxs's SHA2' |
 | testHashNotFound() | When not found, return nil |
-| testCrack0 | Able to find 0's SHA1 from crack()|
-| testCrackNotFound() | When crack() did not find any matches, return nil |
 
-### B. How to use it?
-I have two encrypt function, encryptUsingSha1 and encryptUsingSha2 in Sources > CrackStation > EncrptLib. These function as a practice of encryption a string. They are available on macOS 10.15 or higher version. If you want to call them, example as below:
-
-    encryptUsingSha1(from: inpurString)
-    It will return “SHA1 digest: xxxxxxxxxxxxxx”
-
-I have a data JSON file, as a library. It allows my cracking function access to look up the correct password. If you want to access the library to look for a specific words' SHA1, example as below:
-
-    let lookupTable = try CrackStation.loadDictionaryFromDisk()
-    let lookupIndex = lookupTable.firstIndex(where: {$0.value.elementsEqual("a")})
-    //then
-    if let index = lookupIndex {
-        lookupTable[index].key is the SHA-1 code for "a" character.
-    }
-    
-If you want to access the library to look for a specific word by given SHA1 "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8", the example as below:
-    
-    let ans = CrackStation().lookupTable["86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"]
-    ans is the keyword you are looking for
-
-If you want to use crack function:
-
-    let ans = CrackStation().crack(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
-    ans is the key which match the given SHA1
-    else return "nil"
-
-If you want to use decrypt function:
-
-    let ans = decrypt(shaHash: "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")
-    ans is the key which match the given SHA1
-    else return "nil"
-
-### C. Version
-The latest stable version is 1.1.0
-
-### D. Author
+### Author
 This package is build by Aeliana (Po-Hsuan) Shen.
